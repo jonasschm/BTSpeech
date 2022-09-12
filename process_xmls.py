@@ -72,7 +72,7 @@ def extract_speech_text(filename: str, start_line: int) -> str:
         except IndexError as e:
             print(f"Skipping incomplete or malformatted speech: {ret}")
             return ""
-    
+
     return " ".join(words)
 
 
@@ -92,27 +92,25 @@ def parse(filename: str) -> Dict:
 
     with open(filename, encoding="utf-8") as fp:
         line_ctr = 0
-        in_speech = False
 
         for line in fp:
             line_ctr += 1
             match = re.match(REGEX_END_SESSION, line)
             if match:
-                # End of session reached
-                if in_speech:
-                    break
+                break
 
             match = re.match(REGEX_START_SPEECH, line)
             if match:
                 # Start of speech
-                name = match.group(1)
-                party = match.group(2)
+                name = match.group(1).strip()
+                party = match.group(2).strip()
                 if party.lower() not in map(str.lower, PARTYS):
                     print(f"Discarded party {party}")
                     continue
 
                 speech_dict = {}
-                speech_dict["name"] = name
+                speech_dict["name"] = re.sub(r"\(.*?\)", "", name)
+                speech_dict["name"] = speech_dict["name"].strip()
                 speech_dict["party"] = party
                 speech_dict["text"] = extract_speech_text(filename, line_ctr)
 
@@ -138,14 +136,14 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print_usage()
         sys.exit(1)
-    
+
     input_dir = sys.argv[1]
     output_dir = sys.argv[2]
 
     if not os.path.isdir(input_dir):
         print(f"No such directory: {input_dir}")
         sys.exit(1)
-    
+
     if not os.path.isdir(output_dir):
         print(f"No such directory: {output_dir}")
         sys.exit(1)
