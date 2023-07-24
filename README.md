@@ -1,5 +1,5 @@
 # BTSpeech
-Python scripts to extract textual data from **unstructured** parliamentary protocol files (XML) provided by the German Bundestag. For all protocols from the 19th legislative period onwards please use my new repository BTSpeech2.0.
+Python scripts to extract textual data from **unstructured** parliamentary protocol files (XML) provided by the German Bundestag. For all protocols from the 19th legislative period onwards please use my new repository [BTSpeech2.0](https://github.com/jonasschm/BTSpeech2.0).
 
 Python 3 scripts to extract speech texts from XML data provided by [Bundestag Open Data Service](https://www.bundestag.de/services/opendata "Bundestag Open Data") for election periods where the provided XMLs do not follow a structured form (true for datasets of the 19th election period and earlier). Due to the unstructured nature of the provided data, the speech extraction will not always be 100% accurate. However, the quality of the generated dataset should be sufficient for performing quantitative text analysis.
 
